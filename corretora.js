@@ -1,46 +1,36 @@
 const prompt = require("prompt-sync")();
 
-let ultimoId = 0
+let ultimoIdCorretora = 0;
 
-let imoveis = [];
+let corretoras = [];
 
-function modelo(id = ++ultimoId) {
-  const bairro = prompt("Bairro: ");
-  const rua = prompt("Rua: ");
-  const numero = parseInt(prompt("Número: "));
+function modelo(id = ++ultimoIdCorretora) {
+  const nome = prompt("Nome da Corretora: ");
 
-
-  if (bairro != "" && rua != "" && numero > 0) {
-    return {
-      bairro,
-      rua,
-      numero,
-      id
-    };
+  if (nome !== "") {
+    return { id, nome };
   }
 
-  console.log("Imóvel inválido");
+  console.log("Corretora inválida");
+  return null;
 }
 
-function criarImovel() {
-  const novo = modelo();
+function criarCorretora() {
+  const novaCorretora = modelo();
 
-  if (novo) {
-    imoveis.push(novo);
-    console.log("Imóvel criado com sucesso");
+  if (novaCorretora) {
+    corretoras.push(novaCorretora);
+    console.log("Corretora criada com sucesso");
   }
 }
-function listarImoveis() {
-  imoveis.forEach((imovel) => {
-    console.log(
-      `ID: ${imovel.id}. Bairro: ${imovel.bairro}, Rua: ${
-        imovel.rua
-      }, Número: ${imovel.numero}`
-    );
+
+function listarCorretoras() {
+  corretoras.forEach((corretora) => {
+    console.log(`ID: ${corretora.id}, Nome: ${corretora.nome}`);
   });
 }
 
-function atualizarImovel() {
+/* function atualizarImovel() {
   listarImoveis();
 
   const id = prompt("ID do imóvel: ");
@@ -53,26 +43,24 @@ function atualizarImovel() {
     imoveis[indice] = novo;
     console.log("imóvel atualizado com sucesso");
   }
-}
+} */
 
-function removerImovel() {
-  listarImoveis();
-
-  const id = prompt("ID do imóvel: ");
-
-  const indice = imoveis.findIndex(imovel => imovel.id == id)
-
-  if(indice != -1) {
-
-    imoveis.splice(indice, 1);
-  
-    console.log("imóvel removido com sucesso");
+function removerCorretora() {
+  listarCorretoras();
+  const id = prompt("ID da Corretora a ser removida: ");
+  const indice = corretoras.findIndex((corretora) => corretora.id == id);
+  if (indice !== -1) {
+    corretoras.splice(indice, 1);
+    console.log("Corretora removida com sucesso");
+  } else {
+    console.log("Corretora não encontrada");
   }
 }
 
 module.exports = {
-    criarImovel,
-    atualizarImovel,
-    removerImovel,
-    listarImoveis,
-}
+  criarCorretora,
+  //atualizarImovel,
+  removerCorretora,
+  listarCorretoras,
+  corretoras,
+};

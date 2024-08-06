@@ -1,92 +1,66 @@
+const { imoveis } = require("./imovel");
+const { clientes } = require("./cliente");
+const { corretores } = require("./corretor");
 const prompt = require("prompt-sync")();
 
-let ultimoId = 0
 
-let residencias = [];
+let ultimoIdVenda = 0;
+let vendas = [];
 
-function modelo(id = ++ultimoId) {
-  const bairro = prompt("Bairro: ");
-  const rua = prompt("Rua: ");
-  const numero = parseInt(prompt("Número: "));
+function modeloVenda(id = ++ultimoIdVenda) {
+  const id_imovel = prompt("ID do Imóvel: ");
+  const id_cliente = prompt("ID do Cliente: ");
+  const id_corretor = prompt("ID do Corretor: ");
 
-  const moradores = [];
-  while (true) {
-    const nome = prompt("Digite o nome do usuário, ou acabou para sair: ");
-
-    if (nome == "acabou") {
-      break;
-    }
-
-    moradores.push(nome);
+  if (id_imovel !== "" && id_cliente !== "" && id_corretor !== "") {
+    return { id, id_imovel, id_cliente, id_corretor };
   }
 
-  if (bairro != "" && rua != "" && numero > 0 && moradores.length >= 0) {
-    return {
-      bairro,
-      rua,
-      numero,
-      moradores,
-      id
-    };
-  }
-
-  console.log("Residência inválida");
+  console.log("Venda inválida");
+  return null;
 }
 
-function criarResidencia() {
-  const novo = modelo();
+function registrarVenda() {
+  const novaVenda = modeloVenda();
 
-  if (novo) {
-    residencias.push(novo);
-    console.log("Residência criada com sucesso");
+  if (novaVenda) {
+    vendas.push(novaVenda);
+    console.log("Venda registrada com sucesso");
   }
 }
-function listarResidencias() {
-  residencias.forEach((residencia) => {
+
+function listarVendas() {
+  vendas.forEach((venda) => {
     console.log(
-      `ID: ${residencia.id}. Bairro: ${residencia.bairro}, Rua: ${
-        residencia.rua
-      }, Número: ${residencia.numero}`
+      `ID Imóvel: ${venda.id_imovel}, ID Cliente: ${venda.id_cliente}, ID Corretor: ${venda.id_corretor}`
     );
-    residencia.moradores.forEach((morador, indice) => {
-      console.log(`Morador ${indice + 1}: ${morador}`);
-    });
   });
 }
 
-function atualizarResidencia() {
-  listarResidencias();
+function removerVenda() {
+  listarVendas();
+  const id_imovel = prompt("ID do Imóvel vendido a ser removido: ");
+  const id_cliente = prompt("ID do Cliente: ");
+  const id_corretor = prompt("ID do Corretor: ");
 
-  const id = prompt("ID da residência: ");
+  const indice = vendas.findIndex(
+    (venda) =>
+      venda.id_imovel == id_imovel &&
+      venda.id_cliente == id_cliente &&
+      venda.id_corretor == id_corretor
+  );
 
-  const novo = modelo(id);
-
-  const indice = residencias.findIndex(residencia => residencia.id == id)
-
-  if (novo && indice != -1) {
-    residencias[indice] = novo;
-    console.log("Residência atualizada com sucesso");
-  }
-}
-
-function removerResidencia() {
-  listarResidencias();
-
-  const id = prompt("ID da residência: ");
-
-  const indice = residencias.findIndex(residencia => residencia.id == id)
-
-  if(indice != -1) {
-
-    residencias.splice(indice, 1);
-  
-    console.log("Residência removida com sucesso");
+  if (indice !== -1) {
+    vendas.splice(indice, 1);
+    console.log("Venda removida com sucesso");
+  } else {
+    console.log("Venda não encontrada");
   }
 }
 
 module.exports = {
-    criarResidencia,
-    atualizarResidencia,
-    removerResidencia,
-    listarResidencias,
-}
+  registrarVenda,
+  removerVenda,
+  listarVendas,
+  vendas,
+};

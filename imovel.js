@@ -1,41 +1,36 @@
+const { corretoras } = require("./corretora");
 const prompt = require("prompt-sync")();
 
-let ultimoId = 0
-
+let ultimoIdImovel = 0;
 let imoveis = [];
 
-function modelo(id = ++ultimoId) {
+function modeloImovel(id = ++ultimoIdImovel) {
   const bairro = prompt("Bairro: ");
   const rua = prompt("Rua: ");
   const numero = parseInt(prompt("Número: "));
+  const id_corretora = prompt("ID da Corretora: ");
 
-
-  if (bairro != "" && rua != "" && numero > 0) {
-    return {
-      bairro,
-      rua,
-      numero,
-      id
-    };
+  if (bairro !== "" && rua !== "" && numero > 0 && id_corretora !== "") {
+    return { id, bairro, rua, numero, id_corretora };
   }
 
   console.log("Imóvel inválido");
+  return null;
 }
 
 function criarImovel() {
-  const novo = modelo();
+  const novoImovel = modeloImovel();
 
-  if (novo) {
-    imoveis.push(novo);
+  if (novoImovel) {
+    imoveis.push(novoImovel);
     console.log("Imóvel criado com sucesso");
   }
 }
+
 function listarImoveis() {
   imoveis.forEach((imovel) => {
     console.log(
-      `ID: ${imovel.id}. Bairro: ${imovel.bairro}, Rua: ${
-        imovel.rua
-      }, Número: ${imovel.numero}`
+      `ID: ${imovel.id}. Bairro: ${imovel.bairro}, Rua: ${imovel.rua}, Número: ${imovel.numero}`
     );
   });
 }
@@ -47,7 +42,7 @@ function atualizarImovel() {
 
   const novo = modelo(id);
 
-  const indice = imoveis.findIndex(imovel => imovel.id == id)
+  const indice = imoveis.findIndex((imovel) => imovel.id == id);
 
   if (novo && indice != -1) {
     imoveis[indice] = novo;
@@ -60,19 +55,19 @@ function removerImovel() {
 
   const id = prompt("ID do imóvel: ");
 
-  const indice = imoveis.findIndex(imovel => imovel.id == id)
+  const indice = imoveis.findIndex((imovel) => imovel.id == id);
 
-  if(indice != -1) {
-
+  if (indice != -1) {
     imoveis.splice(indice, 1);
-  
+
     console.log("imóvel removido com sucesso");
   }
 }
 
 module.exports = {
-    criarImovel,
-    atualizarImovel,
-    removerImovel,
-    listarImoveis,
-}
+  criarImovel,
+  atualizarImovel,
+  removerImovel,
+  listarImoveis,
+  imoveis,
+};

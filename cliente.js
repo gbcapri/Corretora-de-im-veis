@@ -1,39 +1,32 @@
 const prompt = require("prompt-sync")();
 
-let ultimoId = 0;
+let ultimoIdCliente = 0;
 
 let clientes = [];
 
-function modelo(id = ++ultimoId) {
-  const nomeCliente = prompt("Nome do cliente:");
-  const bairro = prompt("Bairro: ");
-  const rua = prompt("Rua: ");
-  const numero = parseInt(prompt("Número: "));
+function modeloCliente(id = ++ultimoIdCliente) {
+  const nome = prompt("Nome do Cliente: ");
 
-  if (bairro != "" && rua != "" && numero > 0) {
-    return {
-        nomeCliente,
-      bairro,
-      rua,
-      numero,
-      id,
-    };
+  if (nome !== "") {
+    return { id, nome };
   }
 
   console.log("Cliente inválido");
+  return null;
 }
 
-function adicionarCliente() {
-  const novo = modelo();
+function criarCliente() {
+  const novoCliente = modeloCliente();
 
-  if (novo) {
-    clientes.push(novo);
+  if (novoCliente) {
+    clientes.push(novoCliente);
     console.log("Cliente criado com sucesso");
   }
 }
+
 function listarClientes() {
   clientes.forEach((cliente) => {
-    console.log(//continuar a adicionar o nome do cliente
+    console.log(
       `ID: ${cliente.id}. Bairro: ${cliente.bairro}, Rua: ${cliente.rua}, Número: ${cliente.numero}`
     );
   });
@@ -54,23 +47,24 @@ function atualizarCliente() {
   }
 }
 
-function removercliente() {
+function removerCliente() {
   listarClientes();
-
-  const id = prompt("ID do cliente: ");
-
-  const indice = clientes.findIndex((cliente) => cliente.id == id);
-
-  if (indice != -1) {
+  const id = prompt("ID do Cliente a ser removido: ");
+  const indice = clientes.findIndex(cliente => cliente.id == id);
+  if (indice !== -1) {
     clientes.splice(indice, 1);
-
-    console.log("Cliente removida com sucesso");
+    console.log("Cliente removido com sucesso");
+  } else {
+    console.log("Cliente não encontrado");
   }
 }
 
+
+
 module.exports = {
-  adicionarCliente,
+  criarCliente,
   atualizarCliente,
-  removercliente,
+  removerCliente,
   listarClientes,
+  clientes,
 };
