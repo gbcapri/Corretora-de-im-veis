@@ -30,7 +30,7 @@ function listarCorretoras() {
   });
 }
 
-function atualizarImovel() {
+function atualizarCorretora() {
   listarImoveis();
 
   const id = prompt("ID do imóvel: ");
@@ -59,7 +59,7 @@ function removerCorretora() {
 
 module.exports = {
   criarCorretora,
-  atualizarImovel,
+  atualizarCorretora,
   removerCorretora,
   listarCorretoras,
 };
