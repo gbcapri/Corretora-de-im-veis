@@ -62,5 +62,4 @@ module.exports = {
   registrarVenda,
   removerVenda,
   listarVendas,
-  vendas,
 };

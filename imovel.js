@@ -69,5 +69,4 @@ module.exports = {
   atualizarImovel,
   removerImovel,
   listarImoveis,
-  imoveis,
 };

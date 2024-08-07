@@ -49,5 +49,4 @@ module.exports = {
   criarCorretor,
   listarCorretores,
   removerCorretor,
-  corretores,
 };

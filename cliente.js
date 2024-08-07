@@ -66,5 +66,4 @@ module.exports = {
   atualizarCliente,
   removerCliente,
   listarClientes,
-  clientes,
 };

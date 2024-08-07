@@ -30,7 +30,7 @@ function listarCorretoras() {
   });
 }
 
-/* function atualizarImovel() {
+function atualizarImovel() {
   listarImoveis();
 
   const id = prompt("ID do imóvel: ");
@@ -43,7 +43,7 @@ function listarCorretoras() {
     imoveis[indice] = novo;
     console.log("imóvel atualizado com sucesso");
   }
-} */
+} 
 
 function removerCorretora() {
   listarCorretoras();
@@ -59,8 +59,7 @@ function removerCorretora() {
 
 module.exports = {
   criarCorretora,
-  //atualizarImovel,
+  atualizarImovel,
   removerCorretora,
   listarCorretoras,
-  corretoras,
 };
